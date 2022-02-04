@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import PropTypes from 'prop-types';
 //recives an item from FeedbackList and appropoiately display each item
 import Card from './shared/Card'
 export const FeedbackItem = ({item}) => {
@@ -10,4 +11,7 @@ export const FeedbackItem = ({item}) => {
     <div className="text-display">{item.text}</div>       
   </Card>;
 };
+FeedbackItem.propTypes = {
+  item:PropTypes.object.isRequired
+}
 export default FeedbackItem;
