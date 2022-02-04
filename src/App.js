@@ -11,11 +11,18 @@ function App () {
   //since we are not using a context, and the feedback data coulod potentially change we use state since its reactive
   //for when the feed back items are updated
     const [feedback,setFeedback] = useState(FeedbackData)
+
+    //this process is known as prop drilling, passing up props
+    const deleteFeedback = (id) => {
+      console.log('App', id)
+      //returns an array minus the one we are deleting
+      if(window.confirm('Are you sure you want to delete?')) setFeedback(feedback.filter((item) => item.id !== id))
+    }
   return (<>
         <Header/>
     <div className="container">
       {/* passing in the state as a prop to feed back */}
-       <FeedbackList feedback={feedback}/>
+       <FeedbackList feedback={feedback} handleDelete={deleteFeedback}/>
     </div>
   </>);
 };
