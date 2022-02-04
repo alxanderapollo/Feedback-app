@@ -1,33 +1,18 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Header from './components/Header'
-//jsw -> javascript xml
+import FeedbackList from './components/FeedbackList'
+import FeedbackData from './data/FeedbackData';
+//jsx -> javascript xml
 function App () {
-    // const title = 'Blog Post'
-    // const body = 'This is my blog post'
-
-    // const Loading = false;
-    // if(Loading) return <h1>Loading...</h1>
-
-    // const showComments = false;
-
-    // const comments = [
-    //     {id:1, text:'Comment one'},
-    //     {id:2, text: 'Comment two'},
-    //     {id:3, text: 'Comment three'},
-    // ];
-    // <p>{body}</p>
-    // {/* un ordered list of items w/ map */}
-    // <ul>
-    //     {comments.map((comment,index) => (
-    //         <li key={comment.id}>{comment.text}</li>
-    //     ))}
-    // </ul>
+  // feedback state takes feedback data, and we use that as a state
+  //we then pass feed back as a prop for our feedback list where we will map through all of the 
+  //items in that array of objects
+    const [feedback,setFeedback] = useState(FeedbackData)
   return (<>
-    <div className="container">
         <Header/>
-      
-        <h1>My App</h1>
-       
+    <div className="container">
+      {/* passing in the state as a prop to feed back */}
+       <FeedbackList feedback={feedback}/>
     </div>
   </>);
 };
