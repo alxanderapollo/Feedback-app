@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Header from './components/Header'
 import FeedbackList from './components/FeedbackList'
 import FeedbackStats from './components/FeedbackStats'
+import FeedbackForm from './components/FeedbackForm'
 
 import FeedbackData from './data/FeedbackData';
 //jsx -> javascript xml^^6^^^^^^^^^^^^^^^^^^^^^
@@ -24,6 +25,8 @@ function App () {
   return (<>
         <Header/>
     <div className="container">
+      <FeedbackForm/>
+
       {/* feed back state  is ness since the data could change and we want the state to relect the same change in the component */}
       <FeedbackStats feedback={feedback}/>
       {/* passing in the state as a prop to feed back */}
