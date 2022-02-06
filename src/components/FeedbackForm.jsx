@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "./shared/Button";
 import Card from "./shared/Card";
 import RatingSelect from "./RatingSelect";
-function FeedbackForm() {
+function FeedbackForm( {handleAdd}) {
   const [text, setText] = useState("");
   //the button will be disabled unless a user enters more than 10 characters
   const [btnDisabled, setBtnDisabled] = useState(true);
@@ -28,9 +28,27 @@ function FeedbackForm() {
     }
     setText(e.target.value);
   };
+
+  //creates the objecy with the text and rating submitted by the user
+  const handleSubmit = (e) => {
+      //prevents us from submitting to the actual file- also wont refresh the page
+      e.preventDefault();
+        //second check to make sure its ten or more characters on the form 
+      if(text.trim().length > 10) {
+          // if it is construct a new object called new feed back
+          //bellow is a short hand for creating this object instead of doing text:text we can just write text
+          const newFeedback ={
+              text,
+              rating
+          }
+          handleAdd(newFeedback)
+          setText('')
+      }
+  }
+
   return (
     <Card>
-      <form>
+      <form onSubmit={handleSubmit}>
         <h2>How would you rate your service with us?</h2>
        <RatingSelect select = {(rating) => setRating(rating)}/>
         <div className="input-group">
