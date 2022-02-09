@@ -59,10 +59,9 @@ function App() {
                 <FeedbackForm handleAdd={addFeedback} />
 
                 {/* feed back state  is ness since the data could change and we want the state to relect the same change in the component */}
-                <FeedbackStats feedback={feedback} />
+                <FeedbackStats />
                 {/* passing in the state as a prop to feed back */}
                 <FeedbackList
-                  feedback={feedback}
                   handleDelete={deleteFeedback}
                 />
                 <AboutIconLink/>

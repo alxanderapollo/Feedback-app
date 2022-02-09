@@ -1,6 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types'
-function FeedbackStats({feedback}) {
+import {useContext} from 'react'
+//use context hook so we can use the context in this component
+import FeedbackContext from '../Context/FeedbackContext'
+function FeedbackStats() {
+  const {feedback} = useContext(FeedbackContext)
+
   //calculate ratings avg by adding all of them up
   //takes in our accumulators and current value
   //accumulator is our previous value and current val is the value we are current looking at
@@ -23,9 +27,4 @@ function FeedbackStats({feedback}) {
       <h4>Average  Rating: {isNaN(avg) ? 0 : avg}</h4>
   </div>
 }
-
-FeedbackStats.propTypes = {
-  feedback: PropTypes.array.isRequired
-}
-
 export default FeedbackStats;
