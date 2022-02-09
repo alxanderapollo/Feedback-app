@@ -8,12 +8,17 @@ const FeedbackList = ({ feedback, handleDelete }) => {
 
   return (
     <div className="feedback-list">
-        {/* initlia is opacity,meaning whether the component will be invisible or not */}
-        {/* animate it to be visible  */}
-        {/* exit will fade out */}
+      {/* initlia is opacity,meaning whether the component will be invisible or not */}
+      {/* animate it to be visible  */}
+      {/* exit will fade out */}
       <AnimatePresence>
         {feedback.map((item, index) => (
-          <motion.div key={item.id} initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} >
+          <motion.div
+            key={item.id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
             <FeedbackItem
               key={item.id}
               item={item}
