@@ -7,6 +7,8 @@ import FeedbackForm from "./components/FeedbackForm";
 import FeedbackData from "./data/FeedbackData";
 import AboutPage from "./pages/AboutPage";
 import AboutIconLink from "./components/AboutIconLink";
+//Bring in our Provider
+import{FeedbackProvider} from './Context/FeedbackContext'
 
 //npm i  uuid to generate unique id's for each of our feed back items
 import { v4 as uuidv4 } from "uuid";
@@ -42,6 +44,7 @@ function App() {
     setFeedback([newFeedback, ...feedback]);
   };
   return (
+    <FeedbackProvider>
     <Router>
       <Header />
       <div className="container">
@@ -72,6 +75,7 @@ function App() {
         </Routes>
       </div>
     </Router>
+    </FeedbackProvider>
   );
 }
 
