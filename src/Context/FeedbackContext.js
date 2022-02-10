@@ -1,8 +1,6 @@
 //wee need use effect so that we can so that our context is updated
 import { createContext, useState, useEffect } from "react";
 
-import { v4 as uuidv4 } from "uuid";
-
 //our context
 const FeedbackContext = createContext();
 
@@ -31,7 +29,7 @@ const [isLoading, setIsLoading] = useState(true)
 
   //now that the app is running, we need to fetch the data from our json server back end
   const fetchFeedback = async () =>{
-      const response = await fetch(`http://localhost:5000/feedback?_sort=id&_order=desc`)
+      const response = await fetch(`/feedback?_sort=id&_order=desc`)
       const data = await response.json()
      setFeedback(data)
     //at this point our data has fully loaded
@@ -45,24 +43,36 @@ const [isLoading, setIsLoading] = useState(true)
     edit: false,
   });
   //this process is known as prop drilling, passing up props
-  const deleteFeedback = (id) => {
-    console.log("App", id);
+  const deleteFeedback = async (id) => {
     //returns an array minus the one we are deleting
     if (window.confirm("Are you sure you want to delete?"))
+    await fetch(`/feedback/${id}`, {method:'DELETE'})
       setFeedback(feedback.filter((item) => item.id !== id));
   };
 
   //checking to see if we are getting feed back added up into the app component
-  const addFeedback = (newFeedback) => {
-    //calling uuid to generate a unique id for us
-    newFeedback.id = uuidv4();
+  const addFeedback = async (newFeedback) => {
+    //for making requests to the back end - adding elements
+    const response = await fetch('/feedback', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        //set the body of the post method with our object
+        body: JSON.stringify(newFeedback)
+    })
+    // now that we have our reponse we can use the data and add it to our array
+    const data = await response.json()
 
-    // console.log(newFeedback)
+    //calling uuid to generate a unique id for us
+    // newFeedback.id = uuidv4();
+
+    
     //so now that we have our new add feedback we must recall that the state is immutable
     // we cannot simply push onto it we need to update our state by copying the current state and creating
     // a New state
     //new feedback is our most our current feedback item, that will be added to the feedback state
-    setFeedback([newFeedback, ...feedback]);
+    setFeedback([data, ...feedback]);
   };
   //item is the particular item we are editing
   //edit is s state that will change depending on whether we are editing or not
@@ -76,14 +86,26 @@ const [isLoading, setIsLoading] = useState(true)
     });
   };
   //now that we can edit the item we need to update our items
-  const updateFeedback = (id, updateItem) => {
+  const updateFeedback = async (id, updateItem) => {
+
+    const response = await fetch(`/feedback/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        //set the body of the post method with our object
+        body: JSON.stringify(updateItem)
+    })
+    // now that we have our reponse we can use the data and add it to our array
+    const data = await response.json()
+
       //we get the id of the item we want to change and we do a check setFeedBack has the item we want to add as our updates items 
       //map through our current iteration of items
       //we look for the item that has the same id
       setFeedback(feedback.map((item)=> item.id === id ? {
          // if we have a match return the newly upated item and its array
          //and the updated item, other wise return only the item
-         ...item,...updateItem}: item))
+         ...item, ...data}: item))
   }
 
   return (
