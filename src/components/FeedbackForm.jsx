@@ -12,7 +12,7 @@ function FeedbackForm() {
   //rating that will be set by the user
   const [rating, setRating] = useState(10);
 
-  const { addFeedback, feedbackEdit } = useContext(FeedbackContext);
+  const { addFeedback, feedbackEdit, updateFeedback } = useContext(FeedbackContext);
 
   //use effect works as a side effect as result of some event taking place
   //feedback Edit is the state that will be updated as a consquence of the
@@ -60,7 +60,11 @@ function FeedbackForm() {
         text,
         rating,
       };
-      addFeedback(newFeedback);
+
+      //if we are editing and item, check the edit atribute to see if its true, if it is pass the id and a new feed back item
+      if(feedbackEdit.edit === true ) updateFeedback(feedbackEdit.item.id, newFeedback);
+      else addFeedback(newFeedback);
+
       setText("");
     }
   };

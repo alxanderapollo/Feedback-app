@@ -64,11 +64,21 @@ export const FeedbackProvider = ({ children }) => {
       edit: true,
     });
   };
+  //now that we can edit the item we need to update our items
+  const updateFeedback = (id, updateItem) => {
+      //we get the id of the item we want to change and we do a check setFeedBack has the item we want to add as our updates items 
+      //map through our current iteration of items
+      //we look for the item that has the same id
+      setFeedback(feedback.map((item)=> item.id === id ? {
+         // if we have a match return the newly upated item and its array
+         //and the updated item, other wise return only the item
+         ...item,...updateItem}: item))
+  }
 
   return (
     //   anything that we need passed down in the components happen here, data or functions....
     <FeedbackContext.Provider
-      value={{ feedback, deleteFeedback, addFeedback, editFeedback, feedbackEdit }}
+      value={{ feedback, deleteFeedback, addFeedback, editFeedback,updateFeedback, feedbackEdit }}
     >
       {children}
     </FeedbackContext.Provider>
