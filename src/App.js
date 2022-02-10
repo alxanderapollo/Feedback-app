@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import Header from "./components/Header";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; //will use this to route to our other pages such as about me
 import FeedbackList from "./components/FeedbackList";
 import FeedbackStats from "./components/FeedbackStats";
 import FeedbackForm from "./components/FeedbackForm";
-import FeedbackData from "./data/FeedbackData";
 import AboutPage from "./pages/AboutPage";
 import AboutIconLink from "./components/AboutIconLink";
 //Bring in our Provider
