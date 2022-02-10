@@ -9,6 +9,13 @@ const FeedbackContext = createContext();
 export const FeedbackProvider = ({ children }) => {
   // state to contain the objects with the information will be using
   //in this case the object represents the id, text and rating`
+  
+    // feedback state takes feedback data, and we use that as a state
+  //we then pass feed back as a prop for our feedback list where we will map through all of the
+  //items in that array of objects
+  //the reson we are passing our feedback data into the state is because
+  //since we are not using a context, and the feedback data coulod potentially change we use state since its reactive
+  //for when the feed back items are updated
   const [feedback, setFeedback] = useState([
     {
       id: 0,

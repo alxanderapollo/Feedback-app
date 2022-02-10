@@ -11,7 +11,7 @@ const FeedbackList = () => {
   const {feedback} = useContext(FeedbackContext)
 
 
-  if (!feedback || feedback.length == 0) return <p>No Feedback yet</p>;
+  if (!feedback || feedback.length === 0) return <p>No Feedback yet</p>;
 
   return (
     <div className="feedback-list">

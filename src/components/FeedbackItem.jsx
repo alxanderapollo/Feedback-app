@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { useContext } from "react";
 //imports font awesome icons, FaTimes is the x icon we are using on the cards, FaEdit is the pencil icon
