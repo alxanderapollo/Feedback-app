@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+//wee need use effect so that we can so that our context is updated
+import { createContext, useState, useEffect } from "react";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -7,6 +8,10 @@ const FeedbackContext = createContext();
 
 //the children that are passed in are all of the compoenets that will be passed in
 export const FeedbackProvider = ({ children }) => {
+
+//will be our spinner
+const [isLoading, setIsLoading] = useState(true)
+
   // state to contain the objects with the information will be using
   //in this case the object represents the id, text and rating`
   
@@ -16,23 +21,22 @@ export const FeedbackProvider = ({ children }) => {
   //the reson we are passing our feedback data into the state is because
   //since we are not using a context, and the feedback data coulod potentially change we use state since its reactive
   //for when the feed back items are updated
-  const [feedback, setFeedback] = useState([
-    {
-      id: 0,
-      text: "This is item1",
-      rating: 1,
-    },
-    {
-      id: 1,
-      text: "This is item2",
-      rating: 10,
-    },
-    {
-      id: 2,
-      text: "This is item3",
-      rating: 5,
-    },
-  ]);
+  const [feedback, setFeedback] = useState([]);
+
+  //want use Effect to load once as our app loads
+  //reason is we want to get everything that is currently inside of our database
+  useEffect(() => {
+    fetchFeedback()
+  },[])
+
+  //now that the app is running, we need to fetch the data from our json server back end
+  const fetchFeedback = async () =>{
+      const response = await fetch(`http://localhost:5000/feedback?_sort=id&_order=desc`)
+      const data = await response.json()
+     setFeedback(data)
+    //at this point our data has fully loaded
+     setIsLoading(false)
+  } 
 
 
   //need to pass this state down to our form so we can use it along side of it
@@ -85,7 +89,7 @@ export const FeedbackProvider = ({ children }) => {
   return (
     //   anything that we need passed down in the components happen here, data or functions....
     <FeedbackContext.Provider
-      value={{ feedback, deleteFeedback, addFeedback, editFeedback,updateFeedback, feedbackEdit }}
+      value={{ feedback,isLoading, feedbackEdit,  deleteFeedback, addFeedback, editFeedback,updateFeedback}}
     >
       {children}
     </FeedbackContext.Provider>
