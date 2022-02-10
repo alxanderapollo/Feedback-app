@@ -48,6 +48,7 @@ function FeedbackForm() {
     setText(e.target.value);
   };
 
+  //pushing a linte of code 
   //creates the objecy with the text and rating submitted by the user
   const handleSubmit = (e) => {
     //prevents us from submitting to the actual file- also wont refresh the page
