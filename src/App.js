@@ -23,26 +23,6 @@ function App() {
   const [feedback, setFeedback] = useState(FeedbackData);
   console.log(feedback);
 
-  //this process is known as prop drilling, passing up props
-  const deleteFeedback = (id) => {
-    console.log("App", id);
-    //returns an array minus the one we are deleting
-    if (window.confirm("Are you sure you want to delete?"))
-      setFeedback(feedback.filter((item) => item.id !== id));
-  };
-
-  //checking to see if we are getting feed back added up into the app component
-  const addFeedback = (newFeedback) => {
-    //calling uuid to generate a unique id for us
-    newFeedback.id = uuidv4();
-
-    // console.log(newFeedback)
-    //so now that we have our new add feedback we must recall that the state is immutable
-    // we cannot simply push onto it we need to update our state by copying the current state and creating
-    // a New state
-    //new feedback is our most our current feedback item, that will be added to the feedback state
-    setFeedback([newFeedback, ...feedback]);
-  };
   return (
     <FeedbackProvider>
     <Router>
@@ -56,14 +36,12 @@ function App() {
             element={
               <>
                 {/* passes up the form data submitted by the user to be added to our current global way of storing information */}
-                <FeedbackForm handleAdd={addFeedback} />
+                <FeedbackForm />
 
                 {/* feed back state  is ness since the data could change and we want the state to relect the same change in the component */}
                 <FeedbackStats />
                 {/* passing in the state as a prop to feed back */}
-                <FeedbackList
-                  handleDelete={deleteFeedback}
-                />
+                <FeedbackList/>
                 <AboutIconLink/>
               </>
             }

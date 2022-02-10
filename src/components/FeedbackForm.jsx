@@ -2,13 +2,19 @@ import React, { useState } from "react";
 import Button from "./shared/Button";
 import Card from "./shared/Card";
 import RatingSelect from "./RatingSelect";
-function FeedbackForm( {handleAdd}) {
+import {useContext} from 'react'
+import FeedbackContext from '../Context/FeedbackContext'
+
+function FeedbackForm() {
   const [text, setText] = useState("");
   //the button will be disabled unless a user enters more than 10 characters
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [message, setMessage] = useState("");
   //rating that will be set by the user
   const [rating, setRating]  = useState(10);
+
+  const {addFeedback} = useContext(FeedbackContext)
+
 
 
   const handleTextChange = (e) => {
@@ -41,7 +47,7 @@ function FeedbackForm( {handleAdd}) {
               text,
               rating
           }
-          handleAdd(newFeedback)
+          addFeedback(newFeedback)
           setText('')
       }
   }
