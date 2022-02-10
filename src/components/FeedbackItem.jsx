@@ -10,7 +10,7 @@ import FeedbackContext from "../Context/FeedbackContext";
 import Card from "./shared/Card";
 export const FeedbackItem = ({ item }) => {
   //pull out delete feed back function
-  const { deleteFeedback,editFeedback } = useContext(FeedbackContext);
+  const { deleteFeedback,editFeedback, } = useContext(FeedbackContext);
 
   // card is styled component that can be used wherever we want to display a card
   return (

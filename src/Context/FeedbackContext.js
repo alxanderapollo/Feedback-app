@@ -27,6 +27,8 @@ export const FeedbackProvider = ({ children }) => {
     },
   ]);
 
+
+  //need to pass this state down to our form so we can use it along side of it
   const [feedbackEdit, setFeedbackEdit] = useState({
     item: {},
     edit: false,
@@ -66,7 +68,7 @@ export const FeedbackProvider = ({ children }) => {
   return (
     //   anything that we need passed down in the components happen here, data or functions....
     <FeedbackContext.Provider
-      value={{ feedback, deleteFeedback, addFeedback, editFeedback }}
+      value={{ feedback, deleteFeedback, addFeedback, editFeedback, feedbackEdit }}
     >
       {children}
     </FeedbackContext.Provider>

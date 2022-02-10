@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Button from "./shared/Button";
 import Card from "./shared/Card";
 import RatingSelect from "./RatingSelect";
-import {useContext} from 'react'
-import FeedbackContext from '../Context/FeedbackContext'
+import FeedbackContext from "../Context/FeedbackContext";
 
 function FeedbackForm() {
   const [text, setText] = useState("");
@@ -11,11 +10,25 @@ function FeedbackForm() {
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [message, setMessage] = useState("");
   //rating that will be set by the user
-  const [rating, setRating]  = useState(10);
+  const [rating, setRating] = useState(10);
 
-  const {addFeedback} = useContext(FeedbackContext)
+  const { addFeedback, feedbackEdit } = useContext(FeedbackContext);
 
-
+  //use effect works as a side effect as result of some event taking place
+  //feedback Edit is the state that will be updated as a consquence of the
+  //event firing in this case - the dependency array is set of items that will be changed everytime
+  //the web page is fired and in this case its our feed back edit item when a user tries to edit the an object
+  useEffect(() => {
+    //what we want is for when a user clicks on edit - to dsiable the button
+    if (feedbackEdit.edit === true) {
+      //1. enable the send button
+      setBtnDisabled(false);
+      //set the text of the case inside of the text bar
+      setText(feedbackEdit.item.text);
+      //get the rating of the item into the obj
+      setRating(feedbackEdit.item.rating);
+    }
+  }, [feedbackEdit]);
 
   const handleTextChange = (e) => {
     //if the text in the form is empty make it empty
@@ -37,26 +50,26 @@ function FeedbackForm() {
 
   //creates the objecy with the text and rating submitted by the user
   const handleSubmit = (e) => {
-      //prevents us from submitting to the actual file- also wont refresh the page
-      e.preventDefault();
-        //second check to make sure its ten or more characters on the form 
-      if(text.trim().length > 10) {
-          // if it is construct a new object called new feed back
-          //bellow is a short hand for creating this object instead of doing text:text we can just write text
-          const newFeedback ={
-              text,
-              rating
-          }
-          addFeedback(newFeedback)
-          setText('')
-      }
-  }
+    //prevents us from submitting to the actual file- also wont refresh the page
+    e.preventDefault();
+    //second check to make sure its ten or more characters on the form
+    if (text.trim().length > 10) {
+      // if it is construct a new object called new feed back
+      //bellow is a short hand for creating this object instead of doing text:text we can just write text
+      const newFeedback = {
+        text,
+        rating,
+      };
+      addFeedback(newFeedback);
+      setText("");
+    }
+  };
 
   return (
     <Card>
       <form onSubmit={handleSubmit}>
         <h2>How would you rate your service with us?</h2>
-       <RatingSelect select = {(rating) => setRating(rating)}/>
+        <RatingSelect select={(rating) => setRating(rating)} />
         <div className="input-group">
           <input
             onChange={handleTextChange}

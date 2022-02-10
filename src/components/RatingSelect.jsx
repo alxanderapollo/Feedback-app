@@ -1,15 +1,26 @@
 import React from "react";
-import { useState } from "react";
-function RatingSelect({select}) {
+import { useState, useContext, useEffect } from "react";
+import FeedbackContext from "../Context/FeedbackContext";
+
+function RatingSelect({ select }) {
   const [selected, setSelected] = useState(10);
 
+  const {feedbackEdit } = useContext(FeedbackContext);
+
+  //update the rating whenever the user select feedbackEdit on the ui
+  useEffect(() => {
+      //1. enable the send button
+      setSelected(feedbackEdit.item.rating);
+  }, [feedbackEdit]);
+
+
   const handleChange = (e) => {
-      //the plus sign changes the string into a number for us
-      setSelected(+e.target.value)
-      //select is propr drilling up the radio button value we are pressing up into the 
-      //select function/prop is taking the value and setting up with the hook we have upstairs
-      select(+e.target.value);
-  }
+    //the plus sign changes the string into a number for us
+    setSelected(+e.target.value);
+    //select is propr drilling up the radio button value we are pressing up into the
+    //select function/prop is taking the value and setting up with the hook we have upstairs
+    select(+e.target.value);
+  };
 
   return (
     <ul className="rating">
